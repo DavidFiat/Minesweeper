@@ -36,6 +36,10 @@ public class Minesweeper {
 	 */
 	private int nivel;
 
+	public int getNivel() {
+		return nivel;
+	}
+
 	/**
 	 * Atributo que tiene la cantidad de minas en el tablero
 	 */
@@ -128,18 +132,18 @@ public class Minesweeper {
 	 * @param j - la columna de la matriz
 	 * @return int - La cantidad de minas que tiene alrededor la casilla [i][j]
 	 */
-	public int cantidadMinasAlrededor(int i, int j) {
+	public int cantidadMinasAlrededor(int a, int b) {
 
-		int contador = 0;
+		int counter = 0;
 		int v = 0;
 		int h = 0;
 
-		for (int a = i - 1; v < 3 && a < squares.length; a++) {
-			for (int b = j - 1; h < 3; b++) {
-				if ((a >= 0 && b >= 0) && (b < squares[a].length)) {
-					if (squares[a][b] != null) {
-						if (squares[a][b].esMina()) {
-							contador++;
+		for (int i = a - 1; v < 3 && i < squares.length; i++) {
+			for (int i2 = b - 1; h < 3; i2++) {
+				if ((i >= 0 && i2 >= 0) && (i2 < squares[i].length)) {
+					if (squares[i][i2] != null) {
+						if (squares[i][i2].esMina()) {
+							counter++;
 						}
 					}
 				}
@@ -148,7 +152,7 @@ public class Minesweeper {
 			v++;
 			h = 0;
 		}
-		return contador;
+		return counter;
 	}
 
 	/**
@@ -177,7 +181,7 @@ public class Minesweeper {
 	 */
 	public void resolver() {
 		for (int i = 0; i < squares.length; i++) {
-			for (int j = 0; j < squares.length; j++) {
+			for (int j = 0; j < squares[0].length; j++) {
 				squares[i][j].destapar();
 			}
 		}
@@ -200,11 +204,11 @@ public class Minesweeper {
 	 * @param j - la columna donde esta la casilla
 	 * @return boolean - true si fue posible destaparla, false en caso contrario
 	 */
-	public boolean abrirCasilla(int i, int j) {
+	public boolean abrirCasilla(int a, int b) {
 		boolean abrir = false;
-		if (!squares[i][j].darSeleccionada()) {
-			squares[i][j].destapar();
-			if (squares[i][j].esMina()) {
+		if (!squares[a][b].darSeleccionada()) {
+			squares[a][b].destapar();
+			if (squares[a][b].esMina()) {
 				perdio = true;
 			}
 			abrir = true;
@@ -238,8 +242,8 @@ public class Minesweeper {
 	 *         pistas para dar
 	 */
 
-	public int darPistaFila() {
-		int index = 0;
+	public String darPista() {
+		String m = "";
 		boolean ya = false;
 		for (int i = 0; i < squares.length && !ya; i++) {
 			for (int i2 = 0; i2 < squares[0].length - 1 && !ya; i2++) {
@@ -248,22 +252,15 @@ public class Minesweeper {
 						if (squares[i][i2].darValor() > 0) {
 							squares[i][i2].destapar();
 							ya = true;
-							index = i;
-							pistaColumna=i2;
+							m = i + "-" + i2;
 						}
 
 					}
 				}
 			}
 		}
-		return index;
+		return m;
 
-	}
-
-	private int pistaColumna;
-
-	public int darPistaColumna() {
-		return pistaColumna;
 	}
 
 	/*
@@ -277,5 +274,9 @@ public class Minesweeper {
 
 	public boolean esMina(int i, int i2) {
 		return squares[i][i2].esMina();
+	}
+
+	public boolean estaSeleccionada(int i, int i2) {
+		return squares[i][i2].darSeleccionada();
 	}
 }

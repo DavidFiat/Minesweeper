@@ -29,10 +29,59 @@ public class WindowController implements Initializable {
 	}
 
 	@Override
+	
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO
 	}
 
+	public void resolver(ActionEvent event) {
+		a.getChildren().clear();
+		GridPane root1 = new GridPane();
+		minesweeper.resolver();
+		if (minesweeper.getNivel() == 1) {
+			for (int i3 = 0; i3 < Minesweeper.FILAS_PRINCIPIANTE; i3++) {
+				for (int i4 = 0; i4 < Minesweeper.COLUMNAS_PRINCIPIANTE; i4++) {
+					Button t = new Button();
+					if (minesweeper.esMina(i3, i4)) {
+						t.setText("*");
+					} else {
+						t.setText("" + minesweeper.cantidadMinasAlrededor(i3, i4));
+					}
+					root1.add(t, i3, i4);
+
+				}
+			}
+		}
+		if (minesweeper.getNivel() == 2) {
+			for (int i3 = 0; i3 < Minesweeper.FILAS_INTERMEDIO; i3++) {
+				for (int i4 = 0; i4 < Minesweeper.COLUMNAS_INTERMEDIO; i4++) {
+					Button t = new Button();
+					if (minesweeper.esMina(i3, i4)) {
+						t.setText("*");
+					} else {
+						t.setText("" + minesweeper.cantidadMinasAlrededor(i3, i4));
+					}
+					root1.add(t, i3, i4);
+
+				}
+			}
+		}
+		if (minesweeper.getNivel() == 3) {
+			for (int i3 = 0; i3 < Minesweeper.FILAS_EXPERTO; i3++) {
+				for (int i4 = 0; i4 < Minesweeper.COLUMNAS_EXPERTO; i4++) {
+					Button t = new Button();
+					if (minesweeper.esMina(i3, i4)) {
+						t.setText("*");
+					} else {
+						t.setText("" + minesweeper.cantidadMinasAlrededor(i3, i4));
+					}
+					root1.add(t, i3, i4);
+
+				}
+			}
+		}
+		a.getChildren().add(root1);
+	}
 
 	public void beginner(ActionEvent event) {
 		a.getChildren().clear();
@@ -44,34 +93,27 @@ public class WindowController implements Initializable {
 				Button t = new Button();
 				t.setText("" + (i3 + 1) + "-" + (i4 + 1));
 				root1.add(t, i3, i4);
-				resolver.setOnAction(resol -> {
-					for (int i = 0; i < Minesweeper.FILAS_PRINCIPIANTE; i++) {
-						for (int i2 = 0; i2 < Minesweeper.COLUMNAS_PRINCIPIANTE; i2++) {
-							t.setText("" + minesweeper.getSquares()[i][i2].darValor());
-						}
-					}
-
-				});
 				t.setOnAction(e -> {
 					minesweeper.abrirCasilla(i3Copy, i4Copy);
-					if (minesweeper.darPerdio()) {
-						t.setText("*");
-						root1.getChildren().clear();
-						Label p = new Label();
-						p.setText("Ha perdido el juego");
-						root1.add(p, 1, 2);
-
-					} else {
-						t.setText("" + minesweeper.cantidadMinasAlrededor(i3Copy, i4Copy));
-						if (minesweeper.gano() && regulador == 0) {
+					if (minesweeper.estaSeleccionada(i3Copy, i4Copy)) {
+						if (minesweeper.darPerdio()) {
+							t.setText("*");
 							root1.getChildren().clear();
 							Label p = new Label();
-							p.setText("Ha ganado el juego");
+							p.setText("Ha perdido el juego");
 							root1.add(p, 1, 2);
+
+						} else {
+							t.setText("" + minesweeper.cantidadMinasAlrededor(i3Copy, i4Copy));
+							if (minesweeper.gano() && regulador == 0) {
+								root1.getChildren().clear();
+								Label p = new Label();
+								p.setText("Ha ganado el juego");
+								root1.add(p, 1, 2);
+							}
+
 						}
-
 					}
-
 				});
 
 			}

@@ -34,7 +34,7 @@
         </Button>
       </children>
     </AnchorPane>
-    <Button fx:id="pista" layoutX="95.0" layoutY="52.0" mnemonicParsing="false" text="Button" visible="false" />
-    <Button fx:id="resolver" layoutX="269.0" layoutY="52.0" mnemonicParsing="false" text="Button" visible="false" />
+    <Button fx:id="pista" layoutX="95.0" layoutY="52.0" mnemonicParsing="false" text="Dar Pista" visible="false" />
+    <Button fx:id="resolver" layoutX="269.0" layoutY="52.0" mnemonicParsing="false" onAction="#resolver" text="Resolver Buscaminas" visible="false" />
   </children>
 </AnchorPane>
